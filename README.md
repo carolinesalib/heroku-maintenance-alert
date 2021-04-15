@@ -1,24 +1,13 @@
-# README
+# Heroku Maintenance Alert
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+WIP project to monitor heroku maintenance windows.
 
-Things you may want to cover:
+Stack:
+* Ruby version: 3.0.0
+* System dependencies: Heroku cli
+* Database: MySQL
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Features:
+* TODO: Rake task to read, save and update maintenance windows
+* TODO: List next maintenance windows allowing to filter for prod environments
+* TODO: Sync events to a given calendar
