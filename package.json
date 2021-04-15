@@ -1,0 +1,5 @@
+{
+  "name": "heroku-maintenance-alert",
+  "private": true,
+  "dependencies": {}
+}
