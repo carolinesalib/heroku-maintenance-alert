@@ -1,0 +1,9 @@
+<div style='margin:30px'>
+  <h1><%= @title %></h1>
+  <% 5.times do %>
+    <%= render(List::RowComponent.new) %>
+  <% end %>
+</div>
+
+
+
