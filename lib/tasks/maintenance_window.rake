@@ -1,5 +1,5 @@
 desc "Reads maintenance windows from Heroku cli and updates the database"
-task :check_maintenance_window do
+task check_maintenance_window: :environment do
   heroku_apps = ENV['HEROKU_APPS']
 
   if heroku_apps.nil?
@@ -7,37 +7,23 @@ task :check_maintenance_window do
   end
 
   heroku_apps.split(',').each do |heroku_app|
-    maintenance_data = JSON.parse(`heroku data:maintenances --app #{heroku_app} --json`)
-    p maintenance_data
-  end
+    maintenance_data_list = JSON.parse(`heroku data:maintenances --app #{heroku_app} --json`)
 
-# TODO: how to save this data?
-#{
-  #"addon"=>{
-    #"uuid"=>"d0df48ae-9135-479e-b9cd-3e724df5ba20",
-    #"name"=>"atvenu-vfaserver-staging-database-20210228",
-    #"attachments"=>[
-      #"DATABASE_FOLLOWER_2021_URL",
-      #"DATABASE_URL"
-    #],
-    #"kind"=>"heroku-postgresql",
-    #"plan"=>"standard-0",
-    #"window"=>"Tuesdays 16:00 to 20:00 UTC"
-  #},
-  #"app"=>{
-    #"name"=>"atvenu-vfaserver-staging",
-    #"uuid"=>"0158de69-2866-4183-a387-d83919204ce3"
-  #},
-  #"window"=>nil,
-  #"status"=>"none",
-  #"required_by"=>nil,
-  #"scheduled_for"=>nil,
-  #"method"=>nil,
-  #"addon_description"=>nil,
-  #"started_at"=>nil,
-  #"completed_at"=>nil,
-  #"duration_seconds"=>nil,
-  #"reason"=>nil,
-  #"server_created_at"=>nil
-#}
+    maintenance_data_list.each do |maintenance_data|
+      p maintenance_data
+      heroku_app = HerokuApp.find_or_create_by!(
+        name: maintenance_data['app']['name'],
+        uuid: maintenance_data['app']['uuid'],
+      )
+
+      Addon.find_or_create_by!(
+        name: maintenance_data['addon']['name'],
+        uuid: maintenance_data['addon']['uuid'],
+      ) do |addon|
+        addon.heroku_app = heroku_app
+        addon.plan = maintenance_data['addon']['plan']
+        addon.window = maintenance_data['addon']['window']
+      end
+    end
+  end
 end
