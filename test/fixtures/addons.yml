@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  uuid: 
+  kind: MyString
+  plan: MyString
+  window: 2021-05-24 18:33:17
+  app: one
+
+two:
+  name: MyString
+  uuid: 
+  kind: MyString
+  plan: MyString
+  window: 2021-05-24 18:33:17
+  app: two

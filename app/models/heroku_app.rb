@@ -1,0 +1,2 @@
+class HerokuApp < ApplicationRecord
+end
